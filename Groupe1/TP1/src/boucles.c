@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main(){
-    unsigned int compteur = 15;
+    int compteur = 15;
 
     for (int i = 0; i <= compteur; i++)
     {
