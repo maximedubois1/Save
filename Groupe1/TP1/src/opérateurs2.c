@@ -2,7 +2,11 @@
 int main(){
     int num1 = 10;
     int num2 = 5;
-    char op = '/';
+    char op;
+
+    printf("Opération entre %d et %d : ", num1, num2);
+    scanf("%c",&op);
+
 
     switch (op)
     {
@@ -28,10 +32,11 @@ int main(){
         printf("OU : %d\n",num1 || num2);
         break;
     case '~':
-        printf("~ num1: %d # num2 : %d\n",~num1, ~num2);
+        printf("~ num1: %d ~ num2 : %d\n",~num1, ~num2);
         break;
     default:
-        printf("default");
+        printf("Erreur");
+        return 1;
         break;
     }
 

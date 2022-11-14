@@ -1,10 +1,16 @@
 #include <stdio.h>
 
 int main() {
-    int nbr = 42949672;
+    int nbr = 78;
     int i;
 
     int res[4*8];
+
+    if(nbr == 0){
+        printf("0\n");
+        return 0;
+
+    }
 
     for (i=0;nbr > 0;i++){
         res[i]=nbr%2;
