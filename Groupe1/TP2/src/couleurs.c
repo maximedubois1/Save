@@ -57,11 +57,11 @@ int main(){
     color[9].R=0x12;
     color[9].G=0x35;
     color[9].B=0x28;
-    color[9].A=0x00;
+    color[9].A=0xF0;
 
     for (int i=0; i<10 ; i++){
         printf("----- Couleur %d ------- \n",i);
-        printf("R: %d\nG: %d\nB: %d\nA: %d\n\n", color[i].R, color[i].G, color[i].B, color[i].A );
+        printf("R: 0x%02hhX\nG: 0x%02hhX\nB: 0x%02hhX\nA: 0x%02hhX\n\n", color[i].R, color[i].G, color[i].B, color[i].A );
     }
     return 0;
 }
