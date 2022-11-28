@@ -1,5 +1,7 @@
 # Bibliothèques
-* 
+* <stdio.h>
+* <stdlib.h>
+* <time.h>
 *
 
 # Références
