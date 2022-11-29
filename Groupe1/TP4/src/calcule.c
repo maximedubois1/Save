@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include "operator.h"
+#include <stdlib.h>
 
 int main(int argc, char ** argv){
-    printf("test");
     
 
     //char op = '+';
   //  int num1 = 45;
-    int num2 = 78;
+    //int num2 = 78;
 
-    
+    //on récupère les différents arguments
     char op = *argv[1];
-    int num1 = (int)argv[2];
-  //  int num2 = (long)argv[3];
+    int num1 = atoi(argv[2]); //atoi pour transfort le string en int
+    int num2 = atoi(argv[3]);
 
 
-    printf("val : %d %i %i\n",op, num1 , num2);
+    printf("val : %c %i %i\n",op, num1 , num2);
     switch (op)
     {
     case '+':

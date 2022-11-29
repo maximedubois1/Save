@@ -1,1 +1,5 @@
-Jean , DUPONT , 1 rue des petites soeurs Lyon , 
+Jean , DUPONT , 1 rue des petites soeurs Lyon , 15 , 20 
+Baptiste , POKELIN , 2 chemin de part dieu Lyon , 10 , 11 
+TATA , TOTO , la bas Lyon , 5 , 15 
+TUTU , TITI , pas ici Lyon , 20 , 18 
+Francis , LEconnus , CPE Lyon , 8 , 2 

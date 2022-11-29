@@ -13,11 +13,11 @@ int lire_fichier(char *nom_de_fichier){
     while (1)
     {
     
-        size = read(fd, &content, 1); //on lit une ligne et on récupère dans size le nombre de ligne restante
+        size = read(fd, &content, 1); //on lit caractère par caractère et on récupère dans size le nombre de charactère restant
         if(size<1){
-            break; //si il reste moins de 1 ligne on arrete tout 
+            break; //si il reste moins de 1 caractère on arrete tout 
         }
-        printf("%c", content); //on affiche la ligne
+        printf("%c", content); //on affiche le caractère
     }
     close(fd); //on ferme le fichier
 

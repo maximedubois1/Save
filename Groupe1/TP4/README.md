@@ -7,13 +7,13 @@
 *
 
 # Références
-*
+* https://reactgo.com/c-convert-int-to-string/
 *
 
 # Difficulté
 *
 
 # Commentaires
-* 
+* Pour l'exercice 4.6, Le programme cherche les occurances de la chaine et non les mots.
 * 
 

@@ -44,7 +44,7 @@ int main(){
     etudiant[4].notes2 = 2;
 
 
-
+    char note[10];
       
     ecrire_fichier("etudiant.txt", "", 'W');
 
@@ -65,9 +65,11 @@ int main(){
         ecrire_fichier("etudiant.txt", " , ",'A');
         ecrire_fichier("etudiant.txt", etudiant[i].adresse,'A');
         ecrire_fichier("etudiant.txt", " , ",'A');
-        ecrire_fichier("etudiant.txt", (char *)etudiant[i].notes1,'A');
+        sprintf(note, "%d", etudiant[i].notes1);
+        ecrire_fichier("etudiant.txt", note,'A');
         ecrire_fichier("etudiant.txt", " , ",'A');
-       // ecrire_fichier("etudiant.txt", etudiant[i].notes2,'A');
+        sprintf(note, "%d", etudiant[i].notes2);
+        ecrire_fichier("etudiant.txt", note,'A');
         ecrire_fichier("etudiant.txt", " \n",'A');
 
     }
