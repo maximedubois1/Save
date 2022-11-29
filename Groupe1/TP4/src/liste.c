@@ -8,16 +8,16 @@
 
 int main(){
 
-    struct couleur c1, c2, c3, c4,c5,c6,c7,c8,c9,c10;
-    struct liste_couleurs lc1, lc2, lc3, lc4,lc5,lc6,lc7,lc8,lc9,lc10;
-    struct couleur n1, n2, n3, n4,n5,n6,n7,n8,n9,n10;
-//  Génération de couleurs fix pour les tests
+    struct couleur c1, c2, c3, c4,c5,c6,c7,c8,c9,c10; //on définit toute les couleurs de base
+    struct liste_couleurs lc1, lc2, lc3, lc4,lc5,lc6,lc7,lc8,lc9,lc10; //on définit les lists de couleurs
+    struct couleur n1, n2, n3, n4,n5,n6,n7,n8,n9,n10; // on définit les couleurs qui seront ajouté
+//  Génération de couleurs fix
     c1.R=0x1;
     c1.G=0x57;
     c1.B=0x25;
     c1.A=0x01;
-    lc1.couleur = c1;
-    lc1.next = &lc2;
+    lc1.couleur = c1; //on ajoute la couleur a la liste
+    lc1.next = &lc2; // on donne le pointeur vers l'élément suivant
 
     c2.R=0x2;
     c2.G=0x78;
@@ -82,6 +82,7 @@ int main(){
     lc10.couleur = c10;
     lc10.next = NULL;
 
+// Génération des couleurs à ajouter 
     n1.R=0x1;
     n1.G=0x57;
     n1.B=0x25;
@@ -132,7 +133,7 @@ int main(){
     n10.B=0x95;
     n10.A=0x12;
 
-    parcours (&lc1);
+    parcours (&lc1); 
     insertion(&n1,&lc1);
     insertion(&n2,&lc1);
     insertion(&n3,&lc1);

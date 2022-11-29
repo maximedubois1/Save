@@ -5,10 +5,6 @@
 int main(int argc, char ** argv){
     
 
-    //char op = '+';
-  //  int num1 = 45;
-    //int num2 = 78;
-
     //on récupère les différents arguments
     char op = *argv[1];
     int num1 = atoi(argv[2]); //atoi pour transfort le string en int
