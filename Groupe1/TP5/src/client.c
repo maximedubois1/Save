@@ -14,6 +14,7 @@
 #include <netinet/in.h>
 
 #include "client.h"
+#include "fichier.h"
 
 /*
  * Fonction d'envoi et de réception de messages
@@ -29,9 +30,17 @@ int envoie_recois_message(int socketfd)
 
   // Demandez à l'utilisateur d'entrer un message
   char message[1024];
-  printf("Votre message (max 1000 caracteres): ");
+  printf("Votre message (max 1000 caracteres): ('calcule:' pour faire une opération) ");
   fgets(message, sizeof(message), stdin);
-  strcpy(data, "message: ");
+
+  char code[10];
+
+  sscanf(message, "%s:", code); //on récupere le code message ou calcule
+
+  if(strcmp(code, "calcule") != 0){ //si il n'y a pas calcule au début 
+    strcpy(data, "message: "); //on rajoute message:
+  } 
+  
   strcat(data, message);
 
   int write_status = write(socketfd, data, strlen(data));
@@ -56,6 +65,43 @@ int envoie_recois_message(int socketfd)
 
   return 0;
 }
+
+int envoie_operateur_numeros(int socketfd, char* message){
+  char data[1024];
+  // la réinitialisation de l'ensemble des données
+  memset(data, 0, sizeof(data));
+
+  // Demandez à l'utilisateur d'entrer un message
+  //char message[1024];
+  //printf("Votre calcule (max 1000 caracteres): ");
+  //fgets(message, sizeof(message), stdin);
+
+  
+  strcat(data, message);
+
+  int write_status = write(socketfd, data, strlen(data));
+  if (write_status < 0)
+  {
+    perror("erreur ecriture");
+    exit(EXIT_FAILURE);
+  }
+
+  // la réinitialisation de l'ensemble des données
+  memset(data, 0, sizeof(data));
+
+  // lire les données de la socket
+  int read_status = read(socketfd, data, sizeof(data));
+  if (read_status < 0)
+  {
+    perror("erreur lecture");
+    return -1;
+  }
+
+  printf("Message recu: %s\n", data);
+
+  return 0;
+}
+
 
 int main()
 {
@@ -88,7 +134,10 @@ int main()
   }
 
   // appeler la fonction pour envoyer un message au serveur
-  envoie_recois_message(socketfd);
+  //envoie_recois_message(socketfd);
+  
+  lire_fichier("../etudiant/1/note1.txt");
+  envoie_operateur_numeros(socketfd,"calcule : + 5 2");
 
   close(socketfd);
 }

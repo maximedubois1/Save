@@ -16,6 +16,7 @@
 
 #include "serveur.h"
 
+
 /* renvoyer un message (*data) au client (client_socket_fd)
  */
 int renvoie_message(int client_socket_fd, char *data)
@@ -72,17 +73,40 @@ int recois_envoie_message(int socketfd)
   // Si le message commence par le mot: 'message:'
   if (strcmp(code, "message:") == 0)
   {
+    char message[1024];
+    //data ="";
+    printf("Votre message (max 1000 caracteres): ");
+    fgets(message, sizeof(message), stdin);
+    strcpy(data, "Réponse serveur: ");
+    strcat(data, message);
     renvoie_message(client_socket_fd, data);
-  }
+  } else if (strcmp(code,"calcule") == 0)
+  {
+    /* code */
+    char buffer[33];
+    snprintf(buffer, sizeof(buffer), "%d", recois_numeros_calcule(data));
+    renvoie_message(client_socket_fd, buffer);
+    
+    }
+  
 
   // fermer le socket
   close(socketfd);
   return (EXIT_SUCCESS);
 }
 
+int recois_numeros_calcule(char *data){
+  char op;
+  float num1;
+  float num2;
+
+  sscanf(data,"calcule : %c %f %f",&op, &num1, &num2);
+  return operatore(op,num1,num2);
+  
+}
+
 int main()
 {
-
   int socketfd;
   int bind_status;
 

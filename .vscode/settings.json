@@ -2,7 +2,8 @@
     "ros.distro": "melodic",
     "files.associations": {
         "stdio.h": "c",
-        "fcntl.h": "c"
+        "fcntl.h": "c",
+        "repertoire.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
