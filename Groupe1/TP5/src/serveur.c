@@ -35,6 +35,7 @@ int renvoie_message(int client_socket_fd, char *data)
  * envoyées par le client. En suite, le serveur envoie un message
  * en retour
  */
+
 int recois_envoie_message(int socketfd)
 {
   struct sockaddr_in client_addr;
@@ -84,38 +85,35 @@ int recois_envoie_message(int socketfd)
   {
     /* code */
     char buffer[33];
-    snprintf(buffer, sizeof(buffer), "%d", recois_numeros_calcule(data));
+    snprintf(buffer, sizeof(buffer), "%f", recois_numeros_calcule(data));
     renvoie_message(client_socket_fd, buffer);
     
-    }
-  
-
+  }
   // fermer le socket
-  close(socketfd);
+  close(client_socket_fd);
   return (EXIT_SUCCESS);
 }
 
-int recois_numeros_calcule(char *data){
+float recois_numeros_calcule(char *data){
   char op;
   float num1;
   float num2;
 
   sscanf(data,"calcule : %c %f %f",&op, &num1, &num2);
   return operatore(op,num1,num2);
-  
 }
 
 int main()
 {
   int socketfd;
   int bind_status;
-
   struct sockaddr_in server_addr;
 
   /*
    * Creation d'une socket
    */
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
+
   if (socketfd < 0)
   {
     perror("Unable to open a socket");
@@ -131,19 +129,23 @@ int main()
   server_addr.sin_port = htons(PORT);
   server_addr.sin_addr.s_addr = INADDR_ANY;
 
+  
   // Relier l'adresse à la socket
   bind_status = bind(socketfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
+
   if (bind_status < 0)
   {
     perror("bind");
     return (EXIT_FAILURE);
   }
 
-  // Écouter les messages envoyés par le client
-  listen(socketfd, 10);
-
-  // Lire et répondre au client
-  recois_envoie_message(socketfd);
-
+    // Écouter les messages envoyés par le client
+    listen(socketfd, 10);
+    while(1)
+    {
+      // Lire et répondre au client
+      recois_envoie_message(socketfd);
+    }
+ 
   return 0;
 }

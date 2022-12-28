@@ -15,7 +15,7 @@
  * en retour
  */
 int recois_envoie_message(int socketfd);
-int operatore(char op, float num1, float num2);
-int recois_numeros_calcule(char *data);
+float operatore(char op, float num1, float num2);
+float recois_numeros_calcule(char *data);
 
 #endif

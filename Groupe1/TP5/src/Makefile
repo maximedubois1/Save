@@ -2,7 +2,7 @@ CC ?= gcc
 
 CFLAGS=-Wall -Wextra -g
 
-COBJS ?= client.o
+COBJS ?= client.o fichier.o
 SOBJS ?= serveur.o operator.o
 
 # Déboggage

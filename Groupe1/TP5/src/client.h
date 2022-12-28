@@ -18,5 +18,6 @@
  * Il faut un argument : l'identifiant de la socket
  */
 int envoie_recois_message(int socketfd);
+float envoie_operateur_numeros(int socketfd, char op, int num1, int num2);
 
 #endif

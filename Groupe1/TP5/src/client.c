@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
  */
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,9 +11,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-
-#include "client.h"
 #include "fichier.h"
+#include "client.h"
 
 /*
  * Fonction d'envoi et de réception de messages
@@ -66,20 +64,35 @@ int envoie_recois_message(int socketfd)
   return 0;
 }
 
-int envoie_operateur_numeros(int socketfd, char* message){
+float envoie_operateur_numeros(int socketfd, char op, int num1, int num2){
   char data[1024];
   // la réinitialisation de l'ensemble des données
   memset(data, 0, sizeof(data));
-
-  // Demandez à l'utilisateur d'entrer un message
-  //char message[1024];
-  //printf("Votre calcule (max 1000 caracteres): ");
-  //fgets(message, sizeof(message), stdin);
-
   
-  strcat(data, message);
+  char num1_chaine[20];
+  char num2_chaine[20];
+
+  sprintf(num1_chaine, "%i", num1);
+  sprintf(num2_chaine, "%i", num2);
+
+
+  sprintf(data,"%c", op);
+  strcat(data, " ");
+  strcat(data, num1_chaine);
+  strcat(data, " ");
+  strcat(data, num2_chaine);
+  
+  char msg[] = "calcule : ";
+  memmove(data + strlen(msg), data, strlen(data) + 1); // on déplace la data à la fin de la msg
+  memcpy(data, msg, strlen(msg)); // on copie la msg au début de data
+  
+  
+  printf("data %s\n",data);
+  // printf("msg %s\n",msg);
 
   int write_status = write(socketfd, data, strlen(data));
+  printf("write_status %i\n",write_status);
+
   if (write_status < 0)
   {
     perror("erreur ecriture");
@@ -87,6 +100,7 @@ int envoie_operateur_numeros(int socketfd, char* message){
   }
 
   // la réinitialisation de l'ensemble des données
+  write_status = -1;
   memset(data, 0, sizeof(data));
 
   // lire les données de la socket
@@ -97,9 +111,9 @@ int envoie_operateur_numeros(int socketfd, char* message){
     return -1;
   }
 
-  printf("Message recu: %s\n", data);
+   printf("Message recu: %s\n", data);
 
-  return 0;
+  return atof(data);
 }
 
 
@@ -134,10 +148,32 @@ int main()
   }
 
   // appeler la fonction pour envoyer un message au serveur
-  //envoie_recois_message(socketfd);
+ 
+    // envoie_recois_message(socketfd);
   
-  lire_fichier("../etudiant/1/note1.txt");
-  envoie_operateur_numeros(socketfd,"calcule : + 5 2");
+  
+  char fichier[100];
+  
+  for (int etu=1; etu<=5; etu++)
+  {
+    int somme = 0;
+    int moy = 0;
+    for(int note=1; note<=5; note++)
+    {
+      strcpy(fichier, "../etudiant/");
+      sprintf(fichier,"%s%d", fichier, etu);
+      strcat(fichier, "/note");
+      sprintf(fichier,"%s%d", fichier, note);
+      strcat(fichier, ".txt");
+      printf("fichier %s\n", fichier);
+      int num = lire_fichier(fichier);
+      printf("Note :%i\n", num);
+      somme = envoie_operateur_numeros(socketfd,'+',somme,num);  
+    }
+    printf("--------Etudiant : %i", etu);
+    printf("Somme : %\n", somme);
+    moy = envoie_operateur_numeros(socketfd,'/',somme,5);
+    printf("Moyenne : %i\n", moy);
 
-  close(socketfd);
+  }
 }

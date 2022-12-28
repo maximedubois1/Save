@@ -46,9 +46,63 @@ void lire_dossier_recursif(char * rep){
     closedir(dir);
 }
 
+struct directory {
+    char path[1024];
+    struct directory *next;
+};
 
 void lire_dossier_iteratif(char *rep){
-    lire_dossier_recursif (rep);
+    struct dirent *pDirent;
+    DIR *dir = opendir(rep);
+
+    if (dir == NULL) {
+        printf("'%s' n'est pas un répertoire\n", rep);
+        return;
+    }
+
+    // Création d'une pile pour stocker les répertoires à parcourir
+    struct directory *directories = NULL;
+    struct directory *current_dir = malloc(sizeof(struct directory));
+    strcpy(current_dir->path, rep);
+    current_dir->next = NULL;
+    directories = current_dir;
+
+    while (directories != NULL) {
+        // Récupération du répertoire courant à partir de la pile
+        current_dir = directories;
+        directories = current_dir->next;
+
+        // Ouverture du répertoire courant
+        dir = opendir(current_dir->path);
+
+        // Parcours du répertoire courant
+        while ((pDirent = readdir(dir)) != NULL) {
+            // On oublie "." et ".."
+            if (strcmp(pDirent->d_name,".") == 0 || strcmp(pDirent->d_name,"..") == 0) {
+                continue;
+            }
+
+            // Si c'est un répertoire, on le stocke dans la pile pour le parcourir plus tard
+            if (pDirent->d_type == DT_DIR) {
+                char path[1024];
+                snprintf(path, sizeof(path), "%s/%s", current_dir->path, pDirent->d_name);
+                struct directory *new_dir = malloc(sizeof(struct directory));
+                strcpy(new_dir->path, path);
+                new_dir->next = directories;
+                directories = new_dir;
+                printf("%s\n", path);
+            } else {
+                // Sinon, c'est un fichier, on l'affiche
+                printf("%s\n", pDirent->d_name);
+            }
+        }
+
+        // Fermeture du répertoire courant
+        closedir(dir);
+
+        // Libération de la mémoire allouée pour le répertoire courant
+        free(current_dir);
+    }
 }
 
 
