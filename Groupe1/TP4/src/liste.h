@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 struct couleur //on définit la structure d'une couleurs
 {
     unsigned char R;

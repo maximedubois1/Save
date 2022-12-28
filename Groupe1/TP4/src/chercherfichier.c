@@ -25,7 +25,7 @@ int recherche_fichier(char *nom_de_fichier, char *chaine){
         if (content == chaine[i]) //si le caractère correspond au caracrtère de ma chaine 
         {
             i++; //on passe au caracère suivant
-            if (i == strlen(chaine)){ //si ma chaine a été complété
+            if (i == (int)strlen(chaine)){ //si ma chaine a été complété
                 count++; //on compte l'occurance
             }
         } else{
@@ -46,8 +46,13 @@ int recherche_fichier(char *nom_de_fichier, char *chaine){
 
 
 
-int main (int argc ,char** argv){
-   
+int main (int argc, char** argv){
+    
+    if (argc < 3)
+    {
+        printf("Erreur veulliez entrer 2 argument");
+        return 1;
+    }
    char * chaine = argv[1];
    char * fichier = argv[2];
     recherche_fichier(fichier,chaine);

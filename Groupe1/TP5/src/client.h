@@ -5,6 +5,8 @@
  *
  */
 
+#include <netinet/in.h>
+
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
 
@@ -19,5 +21,6 @@
  */
 int envoie_recois_message(int socketfd);
 float envoie_operateur_numeros(int socketfd, char op, int num1, int num2);
+int start_connection(int socketfd, struct sockaddr_in server_addr);
 
 #endif

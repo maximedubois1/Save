@@ -2,6 +2,7 @@
 #include "repertoire.h"
 #include <dirent.h>
 #include <string.h>
+#include <stdlib.h>
 
 void lire_dossier(char *rep){
     struct dirent *pDirent;
@@ -85,7 +86,7 @@ void lire_dossier_iteratif(char *rep){
             // Si c'est un répertoire, on le stocke dans la pile pour le parcourir plus tard
             if (pDirent->d_type == DT_DIR) {
                 char path[1024];
-                snprintf(path, sizeof(path), "%s/%s", current_dir->path, pDirent->d_name);
+                strncpy(path, pDirent->d_name, sizeof(path));
                 struct directory *new_dir = malloc(sizeof(struct directory));
                 strcpy(new_dir->path, path);
                 new_dir->next = directories;

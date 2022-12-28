@@ -4,7 +4,11 @@
 
 int main(int argc, char ** argv){
     
-
+    if (argc < 4)
+    {
+        printf("Erreur veulliez entrer 3 argument");
+        return 1;
+    }
     //on récupère les différents arguments
     char op = *argv[1];
     int num1 = atoi(argv[2]); //atoi pour transfort le string en int

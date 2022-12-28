@@ -37,7 +37,6 @@ int main (){
     
 
     int ent = 980; //l'entier à tester
-    int n=0;
     //on affiche la liste trié
     printf("---------------------liste trié \n");
     for (int i=0; i<len_tab; i++){
@@ -52,7 +51,6 @@ int main (){
     while (count <50){
         count++;
         if (*(tab+imoit) == ent){   //si on trouve l'entier au change n et on s'arrete
-            n=1;
             printf("l'entier %d est présent\n", ent);
             return 0;
         }else if (*(tab+imoit) > ent)     //si la valeur fait partie de la partie haute de la liste
