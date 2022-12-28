@@ -75,17 +75,16 @@ int recois_envoie_message(int socketfd)
   if (strcmp(code, "message:") == 0)
   {
     char message[1024];
-    //data ="";
     printf("Votre message (max 1000 caracteres): ");
     fgets(message, sizeof(message), stdin);
     strcpy(data, "Réponse serveur: ");
     strcat(data, message);
     renvoie_message(client_socket_fd, data);
-  } else if (strcmp(code,"calcule") == 0)
+  } else if (strcmp(code,"calcule") == 0) //si le msg reçu contient calcule
   {
     /* code */
     char buffer[33];
-    snprintf(buffer, sizeof(buffer), "%f", recois_numeros_calcule(data));
+    snprintf(buffer, sizeof(buffer), "%f", recois_numeros_calcule(data)); //on fait le calcule et on transforme le resultat en chaine de caractère
     renvoie_message(client_socket_fd, buffer);
     
   }
@@ -99,8 +98,8 @@ float recois_numeros_calcule(char *data){
   float num1;
   float num2;
 
-  sscanf(data,"calcule : %c %f %f",&op, &num1, &num2);
-  return operatore(op,num1,num2);
+  sscanf(data,"calcule : %c %f %f",&op, &num1, &num2); //on récupère les différentes information dans la chaine de caractère
+  return operatore(op,num1,num2); //on appel la fonction operatore
 }
 
 int main()

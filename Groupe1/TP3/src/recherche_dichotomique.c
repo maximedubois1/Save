@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 //fontion de tris à bulle
 int tri(int *tab, int len_tab){
     int n=1;

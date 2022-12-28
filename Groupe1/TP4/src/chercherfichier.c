@@ -33,8 +33,8 @@ int recherche_fichier(char *nom_de_fichier, char *chaine){
 
         }
         
-        if(content == '\n'){
-            if (count > 0 ) printf("Ligne %i, %i fois\n", numligne, count);
+        if(content == '\n'){ //si on trouve un retour à la ligne
+            if (count > 0 ) printf("Ligne %i, %i fois\n", numligne, count); //si on a trouver une fois la chaine on affiche le numéro de la ligne et combien de fois on la trouvé
             count=0;
             numligne ++;
         }
@@ -48,13 +48,14 @@ int recherche_fichier(char *nom_de_fichier, char *chaine){
 
 int main (int argc, char** argv){
     
-    if (argc < 3)
+    if (argc < 3) //si il n'y as pas les 2 arguments
     {
         printf("Erreur veulliez entrer 2 argument");
         return 1;
     }
-   char * chaine = argv[1];
-   char * fichier = argv[2];
+    
+    char * chaine = argv[1];
+    char * fichier = argv[2];
     recherche_fichier(fichier,chaine);
 
 

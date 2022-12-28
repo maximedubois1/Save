@@ -2,7 +2,7 @@
 
 
 
-int factorielle (int num) {
+int factorielle (int num) { //on créer la fonction récurcive factoriel
   if (num == 0) {
     return 1;
   }
@@ -14,7 +14,7 @@ int factorielle (int num) {
 
 int main(){
 
-    
+    //on l'appèle avec différente valeurs
     printf("%i \n",factorielle(1));
     printf("%i \n",factorielle(9));
     printf("%i \n",factorielle(2));

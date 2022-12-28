@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+
 #include "fichier.h"
 #include "client.h"
 
@@ -71,17 +72,19 @@ float envoie_operateur_numeros(int socketfd, char op, int num1, int num2){
   
   char num1_chaine[20];
   char num2_chaine[20];
-
+  
+//on converti les 2 int en chaine de caractère
   sprintf(num1_chaine, "%i", num1);
   sprintf(num2_chaine, "%i", num2);
 
 
-  sprintf(data,"%c", op);
-  strcat(data, " ");
-  strcat(data, num1_chaine);
-  strcat(data, " ");
-  strcat(data, num2_chaine);
-  
+  sprintf(data,"%c", op); // on met l'opérateur de data
+  strcat(data, " ");//on rajoute l'espace
+  strcat(data, num1_chaine); //on rajoute le numéro1
+  strcat(data, " ");//on rajoute l'espace
+  strcat(data, num2_chaine);//on rajoute le numéro2
+
+  //On rajoute la chaine "calcule : " début de data
   char msg[] = "calcule : ";
   memmove(data + strlen(msg), data, strlen(data) + 1); // on déplace la data à la fin de la msg
   memcpy(data, msg, strlen(msg)); // on copie la msg au début de data
@@ -89,7 +92,7 @@ float envoie_operateur_numeros(int socketfd, char op, int num1, int num2){
   
   // printf("data %s\n",data);
 
-  int write_status = write(socketfd, data, strlen(data));
+  int write_status = write(socketfd, data, strlen(data)); // on envoie le msg au serveur
 
   if (write_status < 0)
   {
@@ -110,10 +113,10 @@ float envoie_operateur_numeros(int socketfd, char op, int num1, int num2){
 
    // printf("Message recu: %s\n", data);
 
-  return atof(data);
+  return atof(data); //on transforme le retour en float 
 }
 
-int start_connection(int socketfd, struct sockaddr_in server_addr)
+int start_connection(int socketfd, struct sockaddr_in server_addr) //fonction pour gérer la connection
 {
   /*
    * Creation d'une socket
@@ -152,37 +155,42 @@ int main()
   
   // appeler la fonction pour envoyer un message au serveur
  
-    // envoie_recois_message(socketfd);
+  // envoie_recois_message(socketfd);
   
   
-  char fichier[1000];
+  char fichier[100];
   char temp[200];
   int somme = 0;
   float moy = 0;
-  for (int etu=1; etu<=5; etu++)
+  
+  for (int etu=1; etu<=5; etu++) //pour chaque étudiant 
   {
     printf("--------Etudiant : %i\n", etu);
-    for(int note=1; note<=5; note++)
+    for(int note=1; note<=5; note++) //pour chaque note de l'étudiant
     {
+      //on génère le chemin d'accès à la note concerné
       strcpy(fichier, "../etudiant/");
-      snprintf(temp, 1500, "%s%d", fichier, etu);
+      snprintf(temp, 150, "%s%d", fichier, etu);
       strcpy(fichier, temp);
       strcat(fichier, "/note");
-      snprintf(temp, 1500, "%s%d", fichier, note);
+      snprintf(temp, 150, "%s%d", fichier, note);
       strcpy(fichier, temp);
       strcat(fichier, ".txt");
-      
+
+      //on lit la note
       int num = lire_fichier(fichier);
       printf("Note : %i\n", num);
-      somme = envoie_operateur_numeros(socketfd,'+',somme,num);
+      somme = envoie_operateur_numeros(socketfd,'+',somme,num); //on l'ajoute par le serveur à somme
 
-      close(socketfd);
+      close(socketfd); //on ferme la connection
 
-      socketfd = start_connection(socketfd, server_addr);
+      socketfd = start_connection(socketfd, server_addr); //on reouvre une connection
     }
-    printf("Somme : %i\n", somme);
-    moy = envoie_operateur_numeros(socketfd,'/',somme,5);
+    //affichage des résultats
+    printf("Somme : %i\n", somme); 
+    moy = envoie_operateur_numeros(socketfd,'/',somme,5); //on demande la moyenne au serveur
     printf("Moyenne : %f\n", moy);
+    //on rénitialise somme
     somme = 0;
   }
 }

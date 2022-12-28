@@ -9,7 +9,7 @@
 *
 
 # Difficulté
-*
+* Difficulté de compréhension de l'exercice octect.c
 
 # Commentaires
 * 

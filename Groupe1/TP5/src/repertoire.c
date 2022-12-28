@@ -1,28 +1,29 @@
 #include <stdio.h>
-#include "repertoire.h"
 #include <dirent.h>
 #include <string.h>
 #include <stdlib.h>
 
+#include "repertoire.h"
+
 void lire_dossier(char *rep){
-    struct dirent *pDirent;
-    DIR *dir = opendir(rep);
+    struct dirent *pDirent; //on créer une strucure de type dirent
+    DIR *dir = opendir(rep); //ouverture du dossier à l'aide de la fonction opendir
 
     if (dir == NULL) {
         printf ("'%s' n'est pas un répertoire\n", rep);
     } else {
-        while ((pDirent = readdir(dir)) != NULL) {
+        while ((pDirent = readdir(dir)) != NULL) { //tant qu'on a pas atteint la fin du dossier
             printf ("%s\n", pDirent->d_name);
         }
     }
-    closedir(dir);
+    closedir(dir); //fermeture du fichier
 
 }
 
 
 void lire_dossier_recursif(char * rep){
-    struct dirent *pDirent;
-    DIR *dir = opendir(rep);
+    struct dirent *pDirent;//on créer une strucure de type dirent
+    DIR *dir = opendir(rep);//ouverture du dossier à l'aide de la fonction opendir
 
     if (dir == NULL) {
         printf ("'%s' n'est pas un répertoire\n", rep);
@@ -35,19 +36,19 @@ void lire_dossier_recursif(char * rep){
             }
                 if (pDirent->d_type == DT_DIR) { //si c'est un répertoire
                     char path[1024];
-                    snprintf(path, sizeof(path), "%s/%s", rep, pDirent->d_name);
+                    snprintf(path, sizeof(path), "%s/%s", rep, pDirent->d_name); //on rajoute ce repertoire a path
                     printf ("%s\n", path);
 
-                    lire_dossier_recursif(path);
+                    lire_dossier_recursif(path); //on rappel la fonction avec le nouveau path
                 } else{
                     printf("%s\n",pDirent->d_name);
                 }
         }
     }
-    closedir(dir);
+    closedir(dir); //fermeture du fichier
 }
 
-struct directory {
+struct directory { //on créer une list chainer de repertoire
     char path[1024];
     struct directory *next;
 };

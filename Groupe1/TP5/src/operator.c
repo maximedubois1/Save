@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-float operatore(char op, float num1, float num2)
+float operatore(char op, float num1, float num2) //la fonction opérator fonctionnant avec des float
 {
     float result = 0;
     switch (op)

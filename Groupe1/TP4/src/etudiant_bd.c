@@ -3,8 +3,8 @@
 #include "fichier.h"
 
 int main(){
-
-    struct etudiant{
+    char fichier[] = "etudiant.txt";
+    struct etudiant{ //on définit la structure d'un étudiant
         char prenom[30];
         char nom[30];
         char adresse[50];
@@ -12,7 +12,9 @@ int main(){
         short notes2;
     };
 
-    struct etudiant etudiant[5];
+    struct etudiant etudiant[5]; //on créer un tableau de 5 étudiants
+
+    //On leurs donnes des valeurs
     strcpy(etudiant[0].prenom, "DUPONT");
     strcpy(etudiant[0].nom, "Jean");
     strcpy(etudiant[0].adresse, "1 rue des petites soeurs Lyon");
@@ -46,35 +48,27 @@ int main(){
 
     char note[10];
       
-    ecrire_fichier("etudiant.txt", "", 'W');
+    ecrire_fichier(fichier, "", 'W');
 
     for (int i = 0 ; i < 5; ++i)
     {
-        /*
-        printf("----- Nouvelle étudiant ------- \n");
-        printf("Nom : %s \n", etudiant[i].nom);
-        printf("Prénom : %s \n", etudiant[i].prenom);
-        printf("Adresse : %s \n", etudiant[i].adresse);
-        printf("Note de C : %hd \n", etudiant[i].notes1);
-        printf("Note de système d'exploitation : %hd \n", etudiant[i].notes2);
-*/
-
-        ecrire_fichier("etudiant.txt", etudiant[i].nom,'A');
-        ecrire_fichier("etudiant.txt", " , ",'A');
-        ecrire_fichier("etudiant.txt", etudiant[i].prenom,'A');
-        ecrire_fichier("etudiant.txt", " , ",'A');
-        ecrire_fichier("etudiant.txt", etudiant[i].adresse,'A');
-        ecrire_fichier("etudiant.txt", " , ",'A');
+        //On utilise la fonction ecrire_fichier pour écrire les information nécéssaire
+        ecrire_fichier(fichier, etudiant[i].nom,'A');
+        ecrire_fichier(fichier, " , ",'A');
+        ecrire_fichier(fichier, etudiant[i].prenom,'A');
+        ecrire_fichier(fichier, " , ",'A');
+        ecrire_fichier(fichier, etudiant[i].adresse,'A');
+        ecrire_fichier(fichier, " , ",'A');
         sprintf(note, "%d", etudiant[i].notes1);
-        ecrire_fichier("etudiant.txt", note,'A');
-        ecrire_fichier("etudiant.txt", " , ",'A');
+        ecrire_fichier(fichier, note,'A');
+        ecrire_fichier(fichier, " , ",'A');
         sprintf(note, "%d", etudiant[i].notes2);
-        ecrire_fichier("etudiant.txt", note,'A');
-        ecrire_fichier("etudiant.txt", " \n",'A');
+        ecrire_fichier(fichier, note,'A');
+        ecrire_fichier(fichier, " \n",'A');
 
     }
-
-    lire_fichier("etudiant.txt");
+    //on affiche le fichier
+    lire_fichier(fichier);
 
     return 0;
 }

@@ -1,10 +1,12 @@
 # Bibliothèques
- sys/types.h
- sys/stat.h
- fcntl.h
- unistd.h
- string.h
-*
+* sys/types.h
+* sys/stat.h
+* fcntl.h
+* unistd.h
+* string.h
+* stdio
+* stdlib
+* time
 
 # Références
 * https://reactgo.com/c-convert-int-to-string/
